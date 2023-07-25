@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    container_name: soft2now-db
+    image: postgres:15
+    environment:
+      POSTGRES_DB: soft2now
+      POSTGRES_USER: soft2now
+      POSTGRES_PASSWORD: soft2now
+    volumes:
+      - postgresql_bin:/usr/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+      - ./soft2now.sql:/docker-entrypoint-initdb.d/soft2now.sql
+      - ./files:/files
+    ports:
+      - 5434:5432
+    networks:
+      - db
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  pgadmin_root_prefs:
+    driver: local
+  postgresql_data:
+    driver: local
+  postgresql_bin:
+    driver: local
